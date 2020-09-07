@@ -1,0 +1,10 @@
+{
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.pythonPath": "c:\\Users\\Andreas\\Anaconda3\\envs\\myenv\\python.exe",
+    "python.linting.enabled": false
+}
