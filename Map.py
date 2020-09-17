@@ -4,16 +4,17 @@ import pandas as pd
 import time
 from PIL import Image
 
-class Map_Obj():
+class Map_Obj:
     def __init__(self, task=1):
         self.start_pos, self.goal_pos, self.end_goal_pos, self.path_to_map = self.fill_critical_positions(task)
         self.int_map, self.str_map = self.read_map(self.path_to_map)
+        
         self.tmp_cell_value = self.get_cell_value(self.goal_pos)
         self.set_cell_value(self.start_pos, ' S ')
         self.set_cell_value(self.goal_pos, ' G ')
         self.tick_counter = 0
-        #self.set_start_pos_str_marker(start_pos, self.str_map)
-        #self.set_goal_pos_str_marker(goal_pos, self.str_map)
+        self.set_start_pos_str_marker(self.start_pos, self.str_map)
+        self.set_goal_pos_str_marker(self.goal_pos, self.str_map)
 
     def read_map(self, path):
         """
@@ -228,4 +229,3 @@ class Map_Obj():
                         pixels[x * scale + i, y * scale + j] = colors[map[y][x]]
         # Show image
         image.show()
-
