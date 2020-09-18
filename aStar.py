@@ -1,6 +1,5 @@
 from Map import Map_Obj
-
-
+import time
 
 def generateAllSuccessors(node):
     """Generates all potential successor nodes for a given node"""
@@ -22,7 +21,6 @@ def generateAllSuccessors(node):
             successors.append(successor)
 
     return successors
-    
 
 def attachAndEval(successor,parent):
     """Updates the successors parent and distance"""
@@ -30,14 +28,16 @@ def attachAndEval(successor,parent):
     successor.parent = parent
     successor.g = parent.g + arcCost(successor.pos)
 
-
 def arcCost(pos):
     """Gives the cost of a single cell"""
 
     return map.get_cell_value(pos)
 
+def h(pos,goal_pos):
+    """Heuristic function that gives the minimum distance to the goal"""
 
-    
+    return abs(pos[0]-goal_pos[0]) + abs(pos[1]-goal_pos[1]) #Manhattan distance 
+ 
 class Node:
     """Node structure"""
 
@@ -51,9 +51,12 @@ class Node:
     def __eq__ (self,node):
         return self.pos == node.pos 
 
-   
 def aStar(start_pos,goal_pos):
     """A* best-first search algorithm"""
+
+    print(f"Initiating A* search from {start_pos} to {goal_pos}")
+    print(f"----------------------------------------------------")
+    start_time = time.time()
     
     CLOSED = [] # Untraversed nodes
     OPEN = [] # Traversed nodes
@@ -81,6 +84,8 @@ def aStar(start_pos,goal_pos):
                 current = current.parent
             path.append(current.pos)
 
+            print(f"Path:{path[::-1]}")
+            print(f"The execution of the script took a total of {round(time.time() - start_time,2)} seconds ")
             return path[::-1]
 
         # Generate the successors of the current node
@@ -103,17 +108,10 @@ def aStar(start_pos,goal_pos):
     
     raise ValueError("Could not find a path")
 
-    
-def h(pos,goal_pos):
-    """Heuristic function that gives the minimum distance to the goal"""
-
-    return abs(pos[0]-goal_pos[0]) + abs(pos[1]-goal_pos[1]) #Manhattan distance 
-
-
-
-map = Map_Obj(1)
+map = Map_Obj(3)
 path = aStar(map.start_pos,map.goal_pos)
 
+# Draw the path
 for i in range(1,len(path)-1):
     map.set_cell_value(path[i], "  ", str_map = True)    
 
